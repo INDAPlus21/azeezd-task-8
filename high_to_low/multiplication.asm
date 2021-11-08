@@ -79,18 +79,11 @@ input_msg: .asciiz "\nType a number to calculate its factorial (-1 to exit): "
 			# If n == 0 stop
 			beq $s0, $zero, fac_end
 			
-			## SAVING TO STACK: Assuming multiply function does not guarantee save-safety
-			PUSH($s0)
-			PUSH($s1)
-			
 			# Multiply(fac, n)
 			move $a0, $s0
 			move $a1, $s1
 			jal multiply
 			nop
-			## Retrieve s1 and s0 from stack
-			POP($s1)
-			POP($s0)
 			
 			# fac = result of multiplication
 			move $s1, $v0
