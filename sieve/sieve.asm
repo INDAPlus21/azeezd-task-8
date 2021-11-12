@@ -31,6 +31,7 @@ main:
 		addi $t0, $t0, 1
 		addi $t2, $t2, 1
 		bne $t2, $t1, init_loop
+		nop
 
 	move $t0, $v0 	# size: t0 = size
 	li $t2, 2		# p: t2 = 2
@@ -41,8 +42,8 @@ main:
 		beq $t4, 0, sieve_loop_end 
 		nop
 		
-		la $t1, primes		# t1 = *primes
-		add $t1, $t1, $t2 	# *primes += p
+		la $t1, primes		# t1 = ptr to primes
+		add $t1, $t1, $t2 	# ptr to primes += p
 		lb $t5, ($t1)		# t5 = deref primes
 		bne $t5, 1, elimination_end
 		nop
@@ -53,27 +54,31 @@ main:
 			beq $t5, 0, elimination_end
 			nop
 
-			la $t1, primes 		# t1 = *primes
+			la $t1, primes 		# t1 = ptr to primes
 			add $t1, $t1, $t6	# t1 += i
 			sb $zero, ($t1)		# primes = 0
 
 			add $t6, $t6, $t2	# i += p
 			j elimination
+			nop
 		elimination_end:
 		add $t2, $t2, 1 		# p += 1
 		j sieve_loop
+		nop
 	sieve_loop_end:
 
 	li $t2, 2 # p = 2
 	print_loop:
 		sle $t3, $t2, $t0 	# t3 = p <= size?
 		beq $t3, 0, print_loop_end
+		nop
 
-		la $t1, primes 		# $t1 = *primes
-		add $t1, $t1, $t2	# *primes += p
+		la $t1, primes 		# $t1 = ptr to primes
+		add $t1, $t1, $t2	# ptr to primes += p
 		lb $t1, ($t1)		# t1 = deref primes		
 
 		beq $t1, $zero, print_loop_no_prime # t1 == 0?
+		nop
 
 		li $v0, 1			# print int syscall
 		move $a0, $t2		# arg = p
@@ -86,8 +91,10 @@ main:
 		print_loop_no_prime:
 		add $t2, $t2, 1		# p += 1
 		j print_loop
+		nop
 	print_loop_end:
 	j terminate
+	nop
 	
 
 invalid_input:

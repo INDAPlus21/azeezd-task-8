@@ -30,10 +30,12 @@ input_msg: .asciiz "\nType a number to calculate its factorial (-1 to exit): "
 		li $v0, 5
 		syscall
 		beq $v0, -1, end # if (input == -1) jump to program termination
+		nop
 		
 		# calculate factorial(input)
 		move $a0, $v0
 		jal factorial
+		nop
 		
 		# print calculated value
 		move $a0, $v0
@@ -41,6 +43,7 @@ input_msg: .asciiz "\nType a number to calculate its factorial (-1 to exit): "
 		syscall
 		
 		j main # Jump back to main
+		nop
 		
 		# END OF PROGRAM
 		end:
@@ -78,6 +81,7 @@ input_msg: .asciiz "\nType a number to calculate its factorial (-1 to exit): "
 		fac_loop: # Start of loop
 			# If n == 0 stop
 			beq $s0, $zero, fac_end
+			nop
 			
 			# Multiply(fac, n)
 			move $a0, $s0
@@ -93,8 +97,10 @@ input_msg: .asciiz "\nType a number to calculate its factorial (-1 to exit): "
 		
 			# loop back
 			j fac_loop
+			nop
 		fac_end:
 			move $v0, $s1
 			POP($ra)
 			jr $ra
+			nop
 			
